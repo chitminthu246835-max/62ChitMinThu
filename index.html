@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 7 English - Lesson 2: Life as an artiste</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Times New Roman', Times, serif, 'Padauk';
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .container {
+            background: #ffffff;
+            width: 100%;
+            max-width: 650px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            padding: 25px;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .header h1 {
+            color: #1e3c72;
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .header h2 {
+            color: #d97706;
+            font-size: 18px;
+            margin-top: 5px;
+        }
+
+        /* Image & Passage Section */
+        .passage-wrapper {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .clickable-img {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #d97706;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .clickable-img:hover {
+            transform: scale(1.05);
+        }
+
+        .img-hint {
+            font-size: 14px;
+            color: #4b5563;
+            margin-top: 8px;
+            font-weight: bold;
+        }
+
+        .passage-box {
+            display: none;
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 18px;
+            margin-top: 15px;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .passage-box p {
+            margin-bottom: 12px;
+        }
+
+        .eng-sent {
+            color: #1e293b;
+            font-weight: bold;
+        }
+
+        .myan-sent {
+            color: #b45309;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .action-btn {
+            background: linear-gradient(90deg, #2563eb, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        /* Timer Section */
+        .quiz-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .timer-box {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #dc2626;
+            background: #fee2e2;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid #fca5a5;
+        }
+
+        /* Quiz Card */
+        .quiz-card {
+            display: none;
+        }
+
+        .question-num {
+            font-size: 14px;
+            color: #6b7280;
+            font-weight: bold;
+        }
+
+        .question-text {
+            font-size: 17px;
+            font-weight: bold;
+            color: #0f172a;
+            margin: 10px 0 15px 0;
+            line-height: 1.4;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background: #f8fafc;
+            border: 2px solid #cbd5e1;
+            padding: 12px 16px;
+            border-radius: 10px;
+            text-align: left;
+            font-size: 15px;
+            color: #1e293b;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .option-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .option-btn.correct {
+            background: #dcfce7 !important;
+            border-color: #16a34a !important;
+            color: #14532d !important;
+        }
+
+        .option-btn.incorrect {
+            background: #fee2e2 !important;
+            border-color: #dc2626 !important;
+            color: #7f1d1d !important;
+        }
+
+        .next-btn {
+            background: #059669;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            display: none;
+        }
+
+        /* Results & Graph */
+        .result-card {
+            display: none;
+            text-align: center;
+        }
+
+        .result-title {
+            color: #1e3c72;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .chart-box {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 20px auto;
+        }
+
+        .chart-svg {
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
+        }
+
+        .chart-bg {
+            fill: none;
+            stroke: #e2e8f0;
+            stroke-width: 14;
+        }
+
+        .chart-bar {
+            fill: none;
+            stroke: #2563eb;
+            stroke-width: 14;
+            stroke-linecap: round;
+            stroke-dasharray: 440;
+            stroke-dashoffset: 440;
+            transition: stroke-dashoffset 1s ease-in-out;
+        }
+
+        .chart-val {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: bold;
+            color: #1e293b;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            background: #f1f5f9;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-title { font-size: 13px; color: #64748b; }
+        .stat-num { font-size: 18px; font-weight: bold; }
+        .stat-num.correct { color: #16a34a; }
+        .stat-num.wrong { color: #dc2626; }
+
+        .lock-notice {
+            background: #fef2f2;
+            color: #991b1b;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 15px;
+            border: 1px solid #fca5a5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Grade 7 English</h1>
+        <h2>Lesson 2: Life as an artiste</h2>
+    </div>
+
+    <!-- Passage Section -->
+    <div class="passage-wrapper" id="passageWrapper">
+        <img src="1.jpg" alt="Artiste" class="clickable-img" onclick="openPassage()">
+        <div class="img-hint">Click the image to read the passage.☝️</div>
+
+        <div class="passage-box" id="passageBox">
+            <h4 style="color: #b45309; text-align: center; margin-bottom: 10px;">Alinga Kyaw Swa Shwe Man Tin Maung</h4>
+            
+            <p><span class="eng-sent">A typical Myanmar Zat Pwe is a classical dance-drama.</span>
+            <span class="myan-sent">မြန်မာ့ရိုးရာ ဇာတ်ပွဲသည် ရှေးရိုးစဉ်လာ ကကွက်နှင့် ပြဇာတ်ပေါင်းစပ်ထားသော အနုပညာဖြစ်သည်၊၊</span></p>
+
+            <p><span class="eng-sent">It usually begins with the candlelight dance, followed by different types of dance, Myanmar opera, and slapstick comedy.</span>
+            <span class="myan-sent">ထိုပွဲကို လျှပ်စစ်မီးမပေါ်မီက ဆီမီးခွက်ကကွက်ဖြင့် စတင်လေ့ရှိပြီး၊ အကမျိုးစုံ၊ မြန်မာ့အော်ပရာနှင့် လူရွှင်တော်အဖွဲ့များဖြင့် ဆက်လက်ဖျော်ဖြေကြသည်၊၊</span></p>
+
+            <p><span class="eng-sent">This is followed by the classical dance-drama, which presents one of the jataka tales.</span>
+            <span class="myan-sent">ထို့နောက် ငါးရာငါးဆယ် ဇာတ်တော်များထဲမှ ဇာတ်ကြောင်းများကို အခြေခံထားသော ဇာတ်တော်ကြီးများကို ကပြကြသည်၊၊</span></p>
+
+            <p><span class="eng-sent">One of the greatest artistes of Myanmar is Alinga Kyaw Swa Shwe Man Tin Maung.</span>
+            <span class="myan-sent">မြန်မာနိုင်ငံ၏ အကြီးကျယ်ဆုံးသော အနုပညာရှင်ကြီးများထဲမှ တစ်ဦးမှာ အလင်္ကာကျော်စွာ ရွှေမန်းတင်မောင် ဖြစ်သည်၊၊</span></p>
+
+            <p><span class="eng-sent">Mg Tin Maung was born to U Pya and Daw May in 1918 in Mandalay.</span>
+            <span class="myan-sent">မောင်တင်မောင်ကို ၁၉၁၈ ခုနှစ်တွင် မန္တလေးမြို့၌ အဖ ဦးပြား၊ အမိ ဒေါ်မေတို့မှ မွေးဖွားခဲ့သည်၊၊</span></p>
+
+            <p><span class="eng-sent">He had nine siblings and he was the youngest.</span>
+            <span class="myan-sent">သူ၌ မောင်နှမ ၉ ဦးရှိပြီး သူသည် အငယ်ဆုံးဖြစ်သည်၊၊</span></p>
+
+            <p><span class="eng-sent">His first step towards Zat Pwe was dancing at a puppet show when he was very young.</span>
+            <span class="myan-sent">သူ၏ ဇာတ်သဘင်လောကသို့ ပထမဆုံး ခြေလှမ်းမှာ အသက်ငယ်စဉ်က ရုပ်သေးပွဲ၌ ကပြခဲ့ခြင်း ဖြစ်သည်၊၊</span></p>
+
+            <p><span class="eng-sent">He founded Shwe Man Thabin in 1933 and became a famous artiste.</span>
+            <span class="myan-sent">သူသည် ၁၉၃၃ ခုနှစ်တွင် ရွှေမန်းသဘင်ကို တည်ထောင်ခဲ့ပြီး ကျော်ကြားသော အနုပညာရှင်ဖြစ်လာခဲ့သည်၊၊</span></p>
+
+            <p><span class="eng-sent">In 1953, Shwe Man Tin Maung received the title Alinga Kyaw Swa.</span>
+            <span class="myan-sent">၁၉၅၃ ခုနှစ်တွင် ရွှေမန်းတင်မောင်သည် အလင်္ကာကျော်စွာ ဘွဲ့တံဆိပ်ကို ရရှိခဲ့သည်၊၊</span></p>
+
+            <button class="action-btn" onclick="startQuiz()">Answer the questions (မေးခွန်းများဖြေဆိုမည်)</button>
+        </div>
+    </div>
+
+    <!-- Quiz Card -->
+    <div class="quiz-card" id="quizCard">
+        <div class="quiz-header-bar">
+            <span class="question-num" id="questionNum">Question 1 of 20</span>
+            <div class="timer-box">⏰ <span id="timer">20</span>s</div>
+        </div>
+
+        <div class="question-text" id="questionText">Question loading...</div>
+        <div class="options-grid" id="optionsGrid"></div>
+
+        <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question</button>
+    </div>
+
+    <!-- Result & Graph Card -->
+    <div class="result-card" id="resultCard">
+        <div class="lock-notice">🔒 Since all 20 questions have been answered, you can no longer view the passage🔒</div>
+        <h3 class="result-title">🎉 Quiz Completed!</h3>
+
+        <div class="chart-box">
+            <svg class="chart-svg" viewBox="0 0 160 160">
+                <circle class="chart-bg" cx="80" cy="80" r="70"></circle>
+                <circle class="chart-bar" id="chartBar" cx="80" cy="80" r="70"></circle>
+            </svg>
+            <div class="chart-val" id="chartVal">0%</div>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-box">
+                <span class="stat-title">Total</span>
+                <span class="stat-num" id="totalVal">20</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-title">Correct</span>
+                <span class="stat-num correct" id="correctVal">0</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-title">Error</span>
+                <span class="stat-num wrong" id="wrongVal">0</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 20 Questions Data based on Grade 7 Lesson 2
+    const quizData = [
+        { q: "What is a typical Myanmar Zat Pwe?", options: ["A modern pop concert", "A classical dance-drama", "A movie show", "A magic performance"], a: 1 },
+        { q: "Which dance does a typical Zat Pwe usually begin with?", options: ["Puppet dance", "Choral dance", "Candlelight dance", "Duet dance"], a: 2 },
+        { q: "What stories are presented in classical dance-dramas?", options: ["Jataka tales", "Fairy tales", "Modern novels", "Foreign stories"], a: 0 },
+        { q: "Who is one of the greatest artistes of Myanmar mentioned in the text?", options: ["U Po Sein", "Shwe Man Tin Maung", "Mya Chay Gyin", "U Pya"], a: 1 },
+        { q: "In which year was Mg Tin Maung born?", options: ["1933", "1953", "1918", "1969"], a: 2 },
+        { q: "Where was Mg Tin Maung born?", options: ["Yangon", "Mandalay", "Bago", "Sagaing"], a: 1 },
+        { q: "Who were Mg Tin Maung's parents?", options: ["U Pya and Daw May", "U Ba and Daw Mya", "U Sein and Daw Yin", "U Hla and Daw Hnin"], a: 0 },
+        { q: "How many siblings did Mg Tin Maung have?", options: ["5", "7", "9", "10"], a: 2 },
+        { q: "What was Mg Tin Maung's position among his siblings?", options: ["The eldest", "The middle child", "The youngest", "The second child"], a: 2 },
+        { q: "What was Mg Tin Maung's first step towards Zat Pwe?", options: ["Singing at a concert", "Dancing at a puppet show", "Playing the drum", "Acting in opera"], a: 1 },
+        { q: "From whom did Mg Tin Maung learn performing arts later?", options: ["Daw May", "Mya Chay Gyin Ma Ngwe Myaing", "U Pya", "Aunga Kyaw Swa"], a: 1 },
+        { q: "What troupe did Mg Tin Maung found in 1933?", options: ["Mandalay Thabin", "Shwe Man Thabin", "Myanmar Thabin", "Dagon Thabin"], a: 1 },
+        { q: "In which year did Shwe Man Tin Maung visit the USA?", options: ["1953", "1959", "1969", "1918"], a: 1 },
+        { q: "How many verses on the Buddha's renunciation did he learn by heart?", options: ["10 verses", "550 verses", "27 verses", "100 verses"], a: 2 },
+        { q: "What title did Shwe Man Tin Maung receive in 1953?", options: ["Alinga Kyaw Swa", "Maha Thray Sithu", "Wunna Kyaw Htin", "Thiri Pyanchi"], a: 0 },
+        { q: "When did Shwe Man Tin Maung pass away?", options: ["1953", "1959", "1969", "1975"], a: 2 },
+        { q: "Where did he pass away in 1969?", options: ["At home", "In hospital", "While dancing on the stage", "In the USA"], a: 2 },
+        { q: "Which dance style of Mg Tin Maung was very popular at that time?", options: ["Duet dance style", "Solo dance style", "Mask dance style", "Sword dance style"], a: 0 },
+        { q: "Although he was very famous, what was his personality like?", options: ["Proud", "Modest", "Strict", "Impatient"], a: 1 },
+        { q: "What quality describes his ability to invent new choreography and operas?", options: ["Lazy", "Creative and imaginative", "Shy", "Careless"], a: 1 }
+    ];
+
+    let currentQ = 0;
+    let score = 0;
+    let timerInterval = null;
+    let timeLeft = 20;
+    let optionSelected = false;
+
+    // Web Audio API Sound Effects (Correct & Wrong)
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound(type) {
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (type === 'correct') {
+            osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
+            osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1); // A5
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.3);
+        } else {
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+            osc.frequency.setValueAtTime(100, audioCtx.currentTime + 0.1);
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.3);
+        }
+    }
+
+    function openPassage() {
+        document.getElementById('passageBox').style.display = 'block';
+    }
+
+    function startQuiz() {
+        // Hide Passage Section completely
+        document.getElementById('passageWrapper').style.display = 'none';
+        document.getElementById('quizCard').style.display = 'block';
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        const q = quizData[currentQ];
+        document.getElementById('questionNum').innerText = `Question ${currentQ + 1} of 20`;
+        document.getElementById('questionText').innerText = q.q;
+
+        const grid = document.getElementById('optionsGrid');
+        grid.innerHTML = '';
+        document.getElementById('nextBtn').style.display = 'none';
+        optionSelected = false;
+
+        q.options.forEach((opt, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = opt;
+            btn.onclick = () => selectAnswer(idx, btn);
+            grid.appendChild(btn);
+        });
+
+        startTimer();
+    }
+
+    function startTimer() {
+        clearInterval(timerInterval);
+        timeLeft = 20;
+        document.getElementById('timer').innerText = timeLeft;
+
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            document.getElementById('timer').innerText = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timeOutAction();
+            }
+        }, 1000);
+    }
+
+    function timeOutAction() {
+        if (optionSelected) return;
+        optionSelected = true;
+        playSound('wrong');
+
+        const q = quizData[currentQ];
+        const buttons = document.querySelectorAll('.option-btn');
+        buttons[q.a].classList.add('correct');
+        buttons.forEach(b => b.style.pointerEvents = 'none');
+
+        document.getElementById('nextBtn').style.display = 'block';
+    }
+
+    function selectAnswer(idx, btn) {
+        if (optionSelected) return;
+        optionSelected = true;
+        clearInterval(timerInterval);
+
+        const q = quizData[currentQ];
+        const buttons = document.querySelectorAll('.option-btn');
+
+        if (idx === q.a) {
+            btn.classList.add('correct');
+            playSound('correct');
+            score++;
+        } else {
+            btn.classList.add('incorrect');
+            buttons[q.a].classList.add('correct');
+            playSound('wrong');
+        }
+
+        buttons.forEach(b => b.style.pointerEvents = 'none');
+        document.getElementById('nextBtn').style.display = 'block';
+    }
+
+    function nextQuestion() {
+        currentQ++;
+        if (currentQ < quizData.length) {
+            loadQuestion();
+        } else {
+            showResult();
+        }
+    }
+
+    function showResult() {
+        document.getElementById('quizCard').style.display = 'none';
+        document.getElementById('resultCard').style.display = 'block';
+
+        const total = quizData.length;
+        const wrong = total - score;
+        const pct = Math.round((score / total) * 100);
+
+        document.getElementById('totalVal').innerText = total;
+        document.getElementById('correctVal').innerText = score;
+        document.getElementById('wrongVal').innerText = wrong;
+        document.getElementById('chartVal').innerText = `${pct}%`;
+
+        // SVG Donut animation calculation
+        const circumference = 440;
+        const offset = circumference - (pct / 100) * circumference;
+        
+        setTimeout(() => {
+            document.getElementById('chartBar').style.strokeDashoffset = offset;
+        }, 100);
+    }
+</script>
+</body>
+</html>
